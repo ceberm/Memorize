@@ -30,8 +30,8 @@ struct CardView: View {
     var body: some View{
         ZStack {
             if card.cardIsFaceUp {
-                RoundedRectangle(cornerRadius: 10.0).fill(Color.white)
                 RoundedRectangle(cornerRadius: 10.0).stroke(lineWidth: 3)
+                .aspectRatio(CGSize(width: 2, height: 3), contentMode: .fit)
                 Text(card.content)
             }
             else{
