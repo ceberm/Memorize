@@ -8,8 +8,18 @@
 import SwiftUI
 
 
-class EmojiMemoryGame {
-    private var model: MemoryGame<String> = createMemoryGame()
+class EmojiMemoryGame: ObservableObject {
+    //@Published es un property wrapper
+    //cada vez que el modelo cambia llama a objectWillChange.send() esto con el fin de no llamar a esta funcion
+    //todas las veces desde los intents 
+    @Published private var model: MemoryGame<String> = createMemoryGame()
+    
+    static func createMemoryGame() -> MemoryGame<String>{
+        let emojis = ["👻", "🎃", "🕷", "🧛‍♂️", "💀"]
+        return MemoryGame<String>(numberOfPairsOfCards: Int.random(in: 2...emojis.count), cardContentFactory: {pairIndex in
+            return emojis[pairIndex]
+        })
+    }
     
     //        MemoryGame<String>(numberOfPairsOfCards: 2) { _ in "😁" }
     //        MemoryGame<String>(numberOfPairsOfCards: 2) { (pairIndex: Int) -> String in
@@ -28,12 +38,5 @@ class EmojiMemoryGame {
     
     func chooseCard(card: MemoryGame<String>.Card){
         model.pick(card: card)
-    }
-    
-    static func createMemoryGame() -> MemoryGame<String>{
-        let emojis = ["👻", "🎃", "🕷", "🧛‍♂️", "💀"]
-        return MemoryGame<String>(numberOfPairsOfCards: Int.random(in: 1...emojis.count), cardContentFactory: {pairIndex in
-            return emojis[pairIndex]
-        })
     }
 }
