@@ -22,7 +22,7 @@ struct EmojiMemoryGameView: View {
         }
         .padding()
         .foregroundColor(Color.orange)
-        .font(viewModel.cards.count > 4 ? Font.subheadline : Font.largeTitle)
+        //.font(viewModel.cards.count > 4 ? Font.subheadline : Font.largeTitle)
     }
 }
 
@@ -30,17 +30,32 @@ struct CardView: View {
     var card: MemoryGame<String>.Card
     
     var body: some View{
+        GeometryReader { geometry in
+            self.body(for: geometry.size)
+        }
+    }
+    
+    func body(for size: CGSize) -> some View {
         ZStack {
             if card.isFaceUp {
-                RoundedRectangle(cornerRadius: 10.0).stroke(lineWidth: 3)
+                RoundedRectangle(cornerRadius: cornerRadius).stroke(lineWidth: edgeLineWidth)
                 Text(card.content)
             }
             else{
-                RoundedRectangle(cornerRadius: 10.0).fill()
-                
+                RoundedRectangle(cornerRadius: cornerRadius).fill()
             }
-            
-
-        }.aspectRatio(CGSize(width: 2, height: 3), contentMode: .fit)
+        }
+        .font(Font.system(size: fontSize(for: size)))
+        .aspectRatio(CGSize(width: 2, height: 3), contentMode: .fit)
+    }
+    
+    //MARK: -Drawing Constants
+    
+    let cornerRadius: CGFloat = 10.0
+    let edgeLineWidth: CGFloat = 3
+    let fontScaleFactor: CGFloat = 0.75
+    
+    func fontSize(for size: CGSize) -> CGFloat {
+        min(size.width, size.height) * fontScaleFactor
     }
 }
