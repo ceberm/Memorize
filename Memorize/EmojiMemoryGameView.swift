@@ -20,7 +20,16 @@ struct EmojiMemoryGameView: View {
             .padding(5)
         }
         .padding()
-        .foregroundColor(Color.orange)
+        .foregroundColor(viewModel.getColorTheme())
+        .padding()
+        Text("Score \(viewModel.getScore())")
+            .padding()
+        Button(action: {
+            viewModel.resetMemoryGame()
+        }, label: {
+            Text("Reset Game")
+        })
+        .padding()
     }
 }
 
@@ -57,11 +66,5 @@ struct CardView: View {
     
     func fontSize(for size: CGSize) -> CGFloat {
         min(size.width, size.height) * fontScaleFactor
-    }
-}
-
-struct EmojiMemoryGameView_Previews: PreviewProvider {
-    static var previews: some View {
-        EmojiMemoryGameView(viewModel: EmojiMemoryGame())
     }
 }
