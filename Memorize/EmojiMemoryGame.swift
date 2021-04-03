@@ -19,7 +19,7 @@ class EmojiMemoryGame: ObservableObject {
     @Published private var model: MemoryGame<String> = createMemoryGame()
     private var currentColor: Color?
     
-    static func createMemoryGame() -> MemoryGame<String>{
+    private static func createMemoryGame() -> MemoryGame<String>{
         let emojis = ["👻", "🎃", "🕷", "🧛‍♂️", "💀"]
         let theme = MemoryGame<String>.Theme(name: "Halloween_Theme", emojis: emojis, numberOfPairsOfCards: Int.random(in: 2...emojis.count))
         return MemoryGame<String>(theme: theme, cardContentFactory: {pairIndex in
